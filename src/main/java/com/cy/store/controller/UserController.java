@@ -25,4 +25,13 @@ public class UserController extends BaseController {
         return new JsonResult<Void>(OK);
 
     }
+    @RequestMapping("/login")
+    public JsonResult<User> login(String username, String password) {
+        //调用业务对象注册
+        User data = userService.login(username, password);
+        //返回数据
+        return new JsonResult<User>(OK, data);
+    }
+
+
 }

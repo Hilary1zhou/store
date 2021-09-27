@@ -3,6 +3,7 @@ package com.cy.store.service.Impl;
 import com.cy.store.entity.User;
 import com.cy.store.mapper.UserMapper;
 import com.cy.store.service.IUserService;
+import com.cy.store.service.ex.PasswordNotMatchException;
 import com.cy.store.service.ex.UserNameDuplicateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -54,8 +55,9 @@ public class IUserServiceImpl implements IUserService {
 
     /**
      * 密码加密
+     *
      * @param password 原始密码
-     * @param salt 盐值
+     * @param salt     盐值
      * @return 返回加密后的密文
      */
     private String getMd5Password(String password, String salt) {
@@ -67,8 +69,32 @@ public class IUserServiceImpl implements IUserService {
          */
         for (int i = 0; i < 3; i++) {
             password = DigestUtils.md5DigestAsHex((salt + password + salt).getBytes()).toLowerCase();
-        } return password;
+        }
+        return password;
     }
 
+    @Override
+    public User login(String username, String password) {
+        User result = userMapper.findByUserName(username);
+        if (result == null) {
+            throw new UserNameDuplicateException("用户数据不存在的错误");
+        }
+        //用户信息已删除is_delete==1
+        if (result.getIsDelete() == 1) {
+            throw new UserNameDuplicateException("用户数据不存在的错误");
+        } else {
+            String md5Password = getMd5Password(password, result.getSalt());
+            if (!result.getPassword().equals(md5Password)) {
+                throw new PasswordNotMatchException("密码验证失败的错误");
+            } else {
+                User user = new User();
+                // 将查询结果中的uid、username、avatar封装到新的user对象中返回
+                user.setUid(result.getUid());
+                user.setUsername(result.getUsername());
+                user.setAvatar(result.getAvatar());
+                return user;
+            }
+        }
+    }
 }
 

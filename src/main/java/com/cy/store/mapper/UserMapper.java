@@ -18,7 +18,8 @@ public interface UserMapper {
     /**
      * 根据用户名查询用户的数据
      * @param username 用户名
-     * @return 找到对于的用户，返回数据，否则返回null
+     * @return 找到对应的用户，返回数据，否则返回null
      */
     User findByUserName(String username);
+
 }

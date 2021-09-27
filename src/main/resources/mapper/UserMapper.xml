@@ -25,8 +25,9 @@
         VALUES (#{username}, #{password}, #{salt}, #{phone}, #{email}, #{gender}, #{avatar}, #{isDelete},
                 #{createdUser}, #{createdTime}, #{modifiedUser}, #{modifiedTime})
     </insert>
-    
+
     <select id="findByUserName" resultMap="UserEntityMap">
             SELECT * FROM t_user WHERE username = #{username}
     </select>
+
 </mapper>
