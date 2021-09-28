@@ -4,6 +4,8 @@ import com.cy.store.service.ex.*;
 import com.cy.store.util.JsonResult;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import javax.servlet.http.HttpSession;
+
 /**
  * @author huan
  * @serial 每天一百行, 致敬未来的自己
@@ -41,4 +43,21 @@ public class BaseController {
         return result;
     }
 
+    /**
+     * 获取session对象中的uid
+     * @param session session对象
+     * @return 当前登录用户的uid值
+     */
+    protected Integer getUidFromSession(HttpSession session) {
+      return Integer.valueOf(session.getAttribute("uid").toString());
+    }
+
+    /**
+     * 获取session对象中的username
+     * @param session   session对象
+     * @return 当前登录用户的用户名
+     */
+    protected String getUserNameFromSession(HttpSession session) {
+        return session.getAttribute("username").toString();
+    }
 }

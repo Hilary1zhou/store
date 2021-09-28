@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpSession;
+
 /**
  * @author huan
  * @serial 每天一百行, 致敬未来的自己
@@ -26,9 +28,11 @@ public class UserController extends BaseController {
 
     }
     @RequestMapping("/login")
-    public JsonResult<User> login(String username, String password) {
+    public JsonResult<User> login(HttpSession session,String username, String password) {
         //调用业务对象注册
         User data = userService.login(username, password);
+        session.setAttribute("uid", data.getUid());
+        session.setAttribute("username",data.getUsername());
         //返回数据
         return new JsonResult<User>(OK, data);
     }

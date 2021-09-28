@@ -36,6 +36,19 @@ public class UserServiceTest {
             System.out.println(e.getMessage());
         }
     }
+
+    @Test
+    public void login() {
+        try {
+            String username = "袁新";
+            String password = "1234";
+            User user = userService.login(username, password);
+            System.out.println("登录成功！" + user);
+        } catch (ServiceException e) {
+            System.out.println("登录失败！" + e.getClass().getSimpleName());
+            System.out.println(e.getMessage());
+        }
+    }
 }
 
 
