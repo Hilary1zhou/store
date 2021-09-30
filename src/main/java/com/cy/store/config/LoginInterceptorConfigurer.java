@@ -18,6 +18,7 @@ import java.util.ArrayList;
  */
 @Configuration
 public class LoginInterceptorConfigurer implements WebMvcConfigurer {
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         //创建拦截器对象

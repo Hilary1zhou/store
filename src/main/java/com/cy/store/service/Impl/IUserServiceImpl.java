@@ -4,7 +4,9 @@ import com.cy.store.entity.User;
 import com.cy.store.mapper.UserMapper;
 import com.cy.store.service.IUserService;
 import com.cy.store.service.ex.PasswordNotMatchException;
+import com.cy.store.service.ex.UpdateException;
 import com.cy.store.service.ex.UserNameDuplicateException;
+import com.cy.store.service.ex.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
@@ -96,5 +98,25 @@ public class IUserServiceImpl implements IUserService {
             }
         }
     }
+
+    @Override
+    public void changePassword(String uid, String username, String oldPassword, String newPassword) {
+        User result = userMapper.findUserByUid(uid);
+        if (result == null || result.getIsDelete() == 1) {
+            throw new UserNotFoundException("用户数据不存在");
+        }
+        //校验旧密码
+        String oldMd5Password = getMd5Password(oldPassword, result.getSalt());
+        if (!oldMd5Password.equals(result.getPassword())) {
+            throw new PasswordNotMatchException("原密码错误");
+        }
+        //对新密码进行加密
+        String newMd5Password = getMd5Password(newPassword, result.getSalt());
+        Integer rows = userMapper.changePassword(uid, newMd5Password, username, new Date());
+        if (rows != 1) {
+            throw new UpdateException("更新用户数据时出现未知的错误，请联系系统管理员");
+        }
+    }
+
 }
 

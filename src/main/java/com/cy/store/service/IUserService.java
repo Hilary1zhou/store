@@ -23,4 +23,7 @@ public interface IUserService {
      * @return
      */
     User login(String username, String password);
+
+    void changePassword(String uid,String username,String oldPassword,String newPassword);
+
 }
