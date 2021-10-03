@@ -36,6 +36,14 @@ public class UserController extends BaseController {
         //返回数据
         return new JsonResult<User>(OK, data);
     }
-
+    @RequestMapping("/update")
+    public JsonResult<User> update(HttpSession session,String oldPassword,String newPassword) {
+        //调用session.getAttribbute("")获取uid，username
+        Integer uid = getUidFromSession(session);
+        String userName = getUserNameFromSession(session);
+        //调用业务对象修改密码
+        userService.updatePassword(uid,userName,oldPassword,newPassword);
+        return new JsonResult<>(200);
+    }
 
 }

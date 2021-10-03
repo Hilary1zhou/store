@@ -37,24 +37,28 @@ public class BaseController {
         }
         if (e instanceof PasswordNotMatchException) {
             result.setState(4002);
-        } else if (e instanceof InsertException) {
+        }
+        if (e instanceof InsertException) {
             result.setState(5000);
+        } else if (e instanceof UpdateException) {
+            result.setState(5001);
         }
         return result;
     }
 
     /**
      * 获取session对象中的uid
+     *
      * @param session session对象
      * @return 当前登录用户的uid值
      */
     protected Integer getUidFromSession(HttpSession session) {
-      return Integer.valueOf(session.getAttribute("uid").toString());
+        return Integer.valueOf(session.getAttribute("uid").toString());
     }
 
     /**
      * 获取session对象中的username
-     * @param session   session对象
+     * @param session session对象
      * @return 当前登录用户的用户名
      */
     protected String getUserNameFromSession(HttpSession session) {
