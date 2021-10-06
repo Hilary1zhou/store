@@ -49,6 +49,18 @@ public class UserServiceTest {
             System.out.println(e.getMessage());
         }
     }
+
+    @Test
+    public void getByUid() {
+        try {
+            Integer uid = 12;
+            User user = userService.getByUid(uid);
+            System.out.println(user);
+        } catch (ServiceException e) {
+            System.out.println(e.getClass().getSimpleName());
+            System.out.println(e.getMessage());
+        }
+    }
 }
 
 

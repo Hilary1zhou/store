@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
-import java.sql.BatchUpdateException;
 import java.util.Date;
 import java.util.UUID;
 
@@ -123,6 +122,40 @@ public class IUserServiceImpl implements IUserService {
             }
 
 
+        }
+    }
+
+    @Override
+    public void updateInfoByUid(Integer uid, String username, User user) {
+        //判断用户是否存在
+        User result = userMapper.findByUid(uid);
+        if (result == null || result.getIsDelete().equals(1)) {
+            throw new UserNotFoundException("用户数据不存在");
+        }else {
+            //向user中补全数据
+            user.setUid(result.getUid());
+            user.setModifiedUser(result.getModifiedUser());
+            user.setModifiedTime(new Date());
+            Integer rows = userMapper.updateInfoByUid(user);
+            if (rows != 1) {
+                throw new UpdateException("更新用户数据时出现未知错误，请联系系统管理员");
+            }
+        }
+    }
+
+    @Override
+    public User getByUid(Integer uid) {
+        User result = userMapper.findByUid(uid);
+        if (result == null || result.getIsDelete().equals(1)) {
+            throw new UserNotFoundException("用户数据不存在");
+        }else {
+            User user = new User();
+            // 将以上查询结果中的username/phone/email/gender封装到新User对象中
+            user.setUsername(result.getUsername());
+            user.setPhone(result.getPhone());
+            user.setEmail(result.getEmail());
+            user.setGender(result.getGender());
+            return user;
         }
     }
 }

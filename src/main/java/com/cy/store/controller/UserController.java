@@ -27,23 +27,39 @@ public class UserController extends BaseController {
         return new JsonResult<Void>(OK);
 
     }
+
     @RequestMapping("/login")
-    public JsonResult<User> login(HttpSession session,String username, String password) {
+    public JsonResult<User> login(HttpSession session, String username, String password) {
         //调用业务对象注册
         User data = userService.login(username, password);
         session.setAttribute("uid", data.getUid());
-        session.setAttribute("username",data.getUsername());
+        session.setAttribute("username", data.getUsername());
         //返回数据
         return new JsonResult<User>(OK, data);
     }
+
     @RequestMapping("/update")
-    public JsonResult<User> update(HttpSession session,String oldPassword,String newPassword) {
+    public JsonResult<User> update(HttpSession session, String oldPassword, String newPassword) {
         //调用session.getAttribbute("")获取uid，username
         Integer uid = getUidFromSession(session);
         String userName = getUserNameFromSession(session);
         //调用业务对象修改密码
-        userService.updatePassword(uid,userName,oldPassword,newPassword);
+        userService.updatePassword(uid, userName, oldPassword, newPassword);
         return new JsonResult<>(200);
     }
 
+    @RequestMapping("get_by_uid")
+    public JsonResult<User> getByUid(HttpSession session) {
+        //调用业务对象获取数据
+        User data = userService.getByUid(getUidFromSession(session));
+        //响应成功和数据
+        return new JsonResult<User>(200, data);
+    }
+    @RequestMapping("update_info")
+    public JsonResult<Void> updateInfo(HttpSession session,User user) {
+        //调用业务对象执行用户修改资料
+        userService.updateInfoByUid(getUidFromSession(session),getUserNameFromSession(session),user);
+        //响应成功
+        return new JsonResult<Void>(OK);
+    }
 }

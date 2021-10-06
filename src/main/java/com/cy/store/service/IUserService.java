@@ -6,8 +6,6 @@ package com.cy.store.service;
 
 import com.cy.store.entity.User;
 
-import java.util.Date;
-
 /**
  * 用户模块业务层接口
  */
@@ -35,4 +33,19 @@ public interface IUserService {
      * @param newPassword   新密码
      */
     void updatePassword(Integer uid, String username, String oldPassword, String newPassword);
+
+    /**
+     * 更新个人资料
+     * @param uid 用户id
+     * @param username 用户名
+     * @param user 用户的数据
+     */
+    public void updateInfoByUid(Integer uid, String username, User user);
+
+    /**
+     * 获取当前用户登录的信息
+     * @param uid 用户id
+     * @return  当前登录的用户的信息
+     */
+    public User getByUid(Integer uid);
 }
