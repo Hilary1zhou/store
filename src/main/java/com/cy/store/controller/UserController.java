@@ -5,7 +5,9 @@ import com.cy.store.service.Impl.IUserServiceImpl;
 import com.cy.store.util.JsonResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 
@@ -61,5 +63,12 @@ public class UserController extends BaseController {
         userService.updateInfoByUid(getUidFromSession(session),getUserNameFromSession(session),user);
         //响应成功
         return new JsonResult<Void>(OK);
+    }
+
+
+
+    @RequestMapping("change_avatar")
+    public JsonResult<String> changeAvatar(HttpSession session, @RequestParam("file") MultipartFile file) {
+
     }
 }

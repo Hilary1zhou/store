@@ -1,5 +1,6 @@
 package com.cy.store.controller;
 
+import com.cy.store.controller.ex.*;
 import com.cy.store.service.ex.*;
 import com.cy.store.util.JsonResult;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -26,7 +27,7 @@ public class BaseController {
      * @param e
      * @return
      */
-    @ExceptionHandler(ServiceException.class)
+    @ExceptionHandler({ServiceException.class,FileUploadException.class})
     public JsonResult<Void> handleException(Throwable e) {
         JsonResult<Void> result = new JsonResult<Void>(e);
         if (e instanceof UserNameDuplicateException) {
@@ -40,8 +41,24 @@ public class BaseController {
         }
         if (e instanceof InsertException) {
             result.setState(5000);
-        } else if (e instanceof UpdateException) {
+        }
+        if (e instanceof UpdateException) {
             result.setState(5001);
+        }
+        if (e instanceof FileEmptyException) {
+            result.setState(6000);
+        }
+        if (e instanceof FileSizeException) {
+            result.setState(6001);
+        }
+        if (e instanceof FileStateException) {
+            result.setState(6002);
+        }
+        if (e instanceof FileTypeException) {
+            result.setState(6003);
+        }
+        if (e instanceof FileUploadIOException) {
+            result.setState(6004);
         }
         return result;
     }
@@ -58,6 +75,7 @@ public class BaseController {
 
     /**
      * 获取session对象中的username
+     *
      * @param session session对象
      * @return 当前登录用户的用户名
      */

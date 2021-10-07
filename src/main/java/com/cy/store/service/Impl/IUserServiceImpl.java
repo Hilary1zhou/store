@@ -59,7 +59,6 @@ public class IUserServiceImpl implements IUserService {
 
     /**
      * 密码加密
-     *
      * @param password 原始密码
      * @param salt     盐值
      * @return 返回加密后的密文
@@ -157,6 +156,25 @@ public class IUserServiceImpl implements IUserService {
             user.setGender(result.getGender());
             return user;
         }
+    }
+
+    @Override
+    public void changeAvatar(Integer uid, String username, String avatar) {
+        // 调用userMapper的findByUid()方法，根据参数uid查询用户数据
+        User result = userMapper.findByUid(uid);
+        // 检查查询结果是否为null或结果中的isDelete是否为1
+        if (result == null || result.getIsDelete().equals(1)) {
+            // 是：抛出UserNotFoundException
+            throw new UserNotFoundException("用户数据不存在");
+        }
+        // 调用userMapper的updateAvatarByUid()方法执行更新，并获取返回值
+        Integer row = userMapper.updateAvatarByUid(uid, avatar, username, new Date());
+        // 判断以上返回的受影响行数是否不为1
+        if (row != 1) {
+            throw new UpdateException("修改时出现未知的异常");
+        }
+        // 是：抛了UpdateException
+
     }
 }
 
