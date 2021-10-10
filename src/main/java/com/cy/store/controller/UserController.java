@@ -91,7 +91,7 @@ public class UserController extends BaseController {
     }
 
 
-    @RequestMapping("change_avatar")
+    @RequestMapping("/change_avatar")
     public JsonResult<String> changeAvatar(HttpSession session, @RequestParam("file") MultipartFile file) {
 
         // 判断上传的文件是否为空
@@ -112,7 +112,7 @@ public class UserController extends BaseController {
 
         //保存头像文件的文件夹
         if (!dir.exists()) {
-            dir.mkdir();
+            dir.mkdirs();
         }
         // 保存的头像文件的文件名
         String suffix = "";
