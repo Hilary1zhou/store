@@ -33,6 +33,3 @@ Integer.valueof返回保存指定的String的值的Integer对象:uid
 2.注册拦截器，配置放行的白名单，拦截除了白名单的所有请求 
 registry.addInterceptor(interceptor).addPathPatterns("/**").excludePathPatterns(patterns);
 
-修改资料
-1.在执行修改用户资料之前，当用户刚打开修改资料的页面时，就应把当前登录的用户信息显示到页面中。
-2.
