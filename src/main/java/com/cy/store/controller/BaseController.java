@@ -39,6 +39,9 @@ public class BaseController {
         if (e instanceof PasswordNotMatchException) {
             result.setState(4002);
         }
+        if (e instanceof AddressCountLimitException) {
+            result.setState(4003);
+        }
         if (e instanceof InsertException) {
             result.setState(5000);
         }
