@@ -14,6 +14,8 @@ import java.util.List;
  */
 @Service
 public class DistrictServiceImpl implements DistrictService {
+
+
     @Autowired
     private DistrictMapper districtMapper;
 
@@ -25,5 +27,10 @@ public class DistrictServiceImpl implements DistrictService {
             district.setParent(null);
         }
         return list;
+    }
+
+    @Override
+    public String getNameByCode(String code) {
+        return districtMapper.findNameByCode(code);
     }
 }

@@ -27,7 +27,7 @@ public class BaseController {
      * @param e
      * @return
      */
-    @ExceptionHandler({ServiceException.class,FileUploadException.class})
+    @ExceptionHandler({ServiceException.class, FileUploadException.class})
     public JsonResult<Void> handleException(Throwable e) {
         JsonResult<Void> result = new JsonResult<Void>(e);
         if (e instanceof UserNameDuplicateException) {
@@ -41,6 +41,12 @@ public class BaseController {
         }
         if (e instanceof AddressCountLimitException) {
             result.setState(4003);
+        }
+        if (e instanceof AccessDeniedException) {
+            result.setState(4004);
+        }
+        if (e instanceof AddressNotFoundException) {
+            result.setState(4005);
         }
         if (e instanceof InsertException) {
             result.setState(5000);

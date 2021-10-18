@@ -27,10 +27,28 @@
         VALUES (#{uid}, #{name}, #{provinceName}, #{provinceCode}, #{cityName}, #{cityCode}, #{areaName}, #{areaCode},
                 #{zip}, #{address}, #{phone}, #{tel}, #{tag}, #{isDefault}, #{createdUser}, #{createdTime}, #{modifiedUser},#{modifiedTime})
     </insert>
+    <update id="updateNonDefaultByUid" parameterType="java.lang.Integer">
+        update t_address
+        set is_default = 0
+        where uid = #{uid};
+    </update>
+
+    <update id="updateDefaultByAid">
+        update t_address
+        set is_default    = 1,
+            modified_user = #{modifiedUser},
+            modified_time = #{modifiedTime}
+        where aid = #{aid};
+    </update>
 
     <select id="CountByUid" resultType="java.lang.Integer">
         select count(*)
         from t_address
         where t_address.uid = #{uid};
+    </select>
+    <select id="findByAid" resultType="com.cy.store.entity.Address" parameterType="java.lang.Integer">
+        select *
+        from t_address
+        where aid = #{aid};
     </select>
 </mapper>
