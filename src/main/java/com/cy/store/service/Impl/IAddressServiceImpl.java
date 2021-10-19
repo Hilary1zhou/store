@@ -87,4 +87,37 @@ public class IAddressServiceImpl implements IAddressService {
             throw new UpdateException("设置默认收货地址时出现未知错误[2]");
         }
     }
+
+    @Override
+    public void Delete(Integer aid, Integer uid, String username) {
+        // 根据参数aid，调用addressMapper中的findByAid()查询收货地址数据
+        Address result = addressMapper.findByAid(aid);
+        if (result == null) {
+            throw new AddressNotFoundException("尝试访问的收货地址数据不存在");
+        }
+        // 判断查询结果中的uid与参数uid是否不一致(使用equals()判断)
+        if (!result.getUid().equals(uid)) {
+            // 是：抛出AccessDeniedException：非法访问
+            throw new AccessDeniedException("非常访问");
+        }
+        Integer rows = addressMapper.deleteByAid(aid);
+        if (rows != 1) {
+            throw new DeleteException("删除收货地址数据时出现未知错误，请联系系统管理员");
+        }
+        //判断is_delete是否为0
+        if (result.getIsDefault() == 0) {
+            return;
+        }
+        // 调用持久层的countByUid()统计目前还有多少收货地址
+        Integer count = addressMapper.CountByUid(uid);
+        if (count == 0) {
+            return;
+        }
+        Address lastModified = addressMapper.findLastModified(uid);
+        Integer lastModifiedAid = lastModified.getAid();
+        Integer row = addressMapper.updateDefaultByAid(lastModifiedAid, username, new Date());
+        if (row != 1) {
+            throw new UpdateException("更新收货地址数据时出现未知错误，请联系系统管理员");
+        }
+    }
 }

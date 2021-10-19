@@ -25,7 +25,8 @@
                                address, phone, tel, tag, is_default, created_user, created_time, modified_user,
                                modified_time)
         VALUES (#{uid}, #{name}, #{provinceName}, #{provinceCode}, #{cityName}, #{cityCode}, #{areaName}, #{areaCode},
-                #{zip}, #{address}, #{phone}, #{tel}, #{tag}, #{isDefault}, #{createdUser}, #{createdTime}, #{modifiedUser},#{modifiedTime})
+                #{zip}, #{address}, #{phone}, #{tel}, #{tag}, #{isDefault}, #{createdUser}, #{createdTime},
+                #{modifiedUser}, #{modifiedTime})
     </insert>
     <update id="updateNonDefaultByUid" parameterType="java.lang.Integer">
         update t_address
@@ -40,6 +41,11 @@
             modified_time = #{modifiedTime}
         where aid = #{aid};
     </update>
+    <delete id="deleteByAid" parameterType="java.lang.Integer">
+        delete
+        from t_address
+        where aid = #{aid};
+    </delete>
 
     <select id="CountByUid" resultType="java.lang.Integer">
         select count(*)
@@ -50,5 +56,12 @@
         select *
         from t_address
         where aid = #{aid};
+    </select>
+    <select id="findLastModified" resultMap="AddressEntityMap">
+        select *
+        from t_address
+        where uid = #{uid}
+        order by modified_time desc
+        limit 0,1
     </select>
 </mapper>
