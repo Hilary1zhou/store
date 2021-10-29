@@ -8,7 +8,7 @@ package com.cy.store.service.ex;
 /**
  * 收货地址数据不存在的异常
  */
-public class AddressNotFoundException extends ServiceException{
+public class AddressNotFoundException extends ServiceException {
     public AddressNotFoundException() {
         super();
     }

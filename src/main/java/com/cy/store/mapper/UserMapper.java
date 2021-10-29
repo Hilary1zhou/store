@@ -57,10 +57,11 @@ public interface UserMapper {
 
     /**
      * 根据用户id修改用户的头像
-     * @param uid 用户id
-     * @param avatar 用户的头像
+     *
+     * @param uid          用户id
+     * @param avatar       用户的头像
      * @param modifiedUser 最后修改执行人
-     * @param modifiedTime  最后修改时间
+     * @param modifiedTime 最后修改时间
      * @return
      */
     Integer updateAvatarByUid(@Param("uid") Integer uid,

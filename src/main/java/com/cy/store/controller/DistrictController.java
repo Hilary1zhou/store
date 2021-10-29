@@ -16,13 +16,13 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/districts")
-public class DistrictController extends BaseController{
+public class DistrictController extends BaseController {
     @Autowired
     private DistrictService districtService;
 
     @GetMapping({"", "/"})
     public JsonResult<List<District>> getByParent(String parent) {
         List<District> data = districtService.getByParent(parent);
-        return new JsonResult<>(OK,data);
+        return new JsonResult<>(OK, data);
     }
 }

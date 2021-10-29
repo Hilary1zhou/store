@@ -146,7 +146,7 @@ public class UserController extends BaseController {
         // 将头像写入到数据库中
         userService.changeAvatar(uid, username, avatar);
         // 返回成功和头像路径
-        return new JsonResult<String> (OK,avatar);
+        return new JsonResult<String>(OK, avatar);
 
     }
 }

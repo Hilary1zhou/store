@@ -8,7 +8,7 @@ package com.cy.store.service.ex;
 /**
  * 非法访问的异常
  */
-public class AccessDeniedException extends ServiceException{
+public class AccessDeniedException extends ServiceException {
     public AccessDeniedException() {
         super();
     }

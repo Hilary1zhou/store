@@ -9,7 +9,6 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 /**
  * 定义一个拦截器
@@ -18,6 +17,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 
     /**
      * 检测全局session对象中是否有uid数据，没有代表用户没登录，拦截下来
+     *
      * @param request
      * @param response
      * @param handler

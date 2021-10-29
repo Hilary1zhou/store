@@ -8,7 +8,7 @@ package com.cy.store.service.ex;
 /**
  * 业务层异常的基类：throw new ServiceExceotion("业务层产生未知的异常")
  */
-public class ServiceException extends RuntimeException{
+public class ServiceException extends RuntimeException {
     public ServiceException() {
         super();
     }

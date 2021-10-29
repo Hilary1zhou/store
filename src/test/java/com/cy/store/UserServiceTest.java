@@ -61,6 +61,7 @@ public class UserServiceTest {
             System.out.println(e.getMessage());
         }
     }
+
     @Test
     public void changeAvatar() {
         try {

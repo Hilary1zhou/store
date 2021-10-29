@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author huan
@@ -87,7 +88,7 @@ public class IAddressServiceImpl implements IAddressService {
             throw new UpdateException("设置默认收货地址时出现未知错误[2]");
         }
     }
-
+    @Transactional
     @Override
     public void Delete(Integer aid, Integer uid, String username) {
         // 根据参数aid，调用addressMapper中的findByAid()查询收货地址数据
@@ -120,4 +121,32 @@ public class IAddressServiceImpl implements IAddressService {
             throw new UpdateException("更新收货地址数据时出现未知错误，请联系系统管理员");
         }
     }
+
+    @Override
+    public List<Address> getByUid(Integer uid) {
+        List<Address> list = addressMapper.findByUid(uid);
+        return list;
+    }
+
+    @Override
+    public Address getByAid(Integer aid,Integer uid) {
+        // 根据收货地址数据id，查询收货地址详情
+        Address address = addressMapper.findByAid(aid);
+
+        if (address == null) {
+            throw new AddressNotFoundException("尝试访问的收货地址数据不存在");
+        }
+        if (!address.getUid().equals(uid)) {
+            throw new AccessDeniedException("非法访问");
+        }
+        address.setProvinceCode(null);
+        address.setCityCode(null);
+        address.setAreaCode(null);
+        address.setCreatedUser(null);
+        address.setCreatedTime(null);
+        address.setModifiedUser(null);
+        address.setModifiedTime(null);
+        return address;
+    }
 }
+

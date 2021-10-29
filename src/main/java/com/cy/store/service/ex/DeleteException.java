@@ -8,7 +8,7 @@ package com.cy.store.service.ex;
 /**
  * 进行删除操作时出现的异常
  */
-public class DeleteException extends ServiceException{
+public class DeleteException extends ServiceException {
     public DeleteException() {
         super();
     }

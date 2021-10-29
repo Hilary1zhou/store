@@ -8,7 +8,7 @@ package com.cy.store.service.ex;
 /**
  * 用户不存在的异常
  */
-public class UserNotFoundException extends ServiceException{
+public class UserNotFoundException extends ServiceException {
     public UserNotFoundException() {
         super();
     }

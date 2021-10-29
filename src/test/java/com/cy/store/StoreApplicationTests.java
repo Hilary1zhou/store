@@ -11,6 +11,7 @@ import java.sql.SQLException;
 class StoreApplicationTests {
     @Autowired
     private DataSource dataSource;
+
     @Test
     void contextLoads() {
     }
